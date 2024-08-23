@@ -108,7 +108,6 @@
             margin-bottom: 10px;
             transition: all 0.3s;
         }
-
         .round-image:hover {
             border: 2px solid #fff;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
@@ -151,17 +150,6 @@
 
         .purchase-button:hover {
             background-color: #0056b3;
-        }
-
-        /* Estilo para o QR Code */
-        .qr-code {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .qr-code img {
-            width: 150px;
-            height: 150px;
         }
     </style>
     
@@ -219,7 +207,40 @@
         }
 
         document.addEventListener('DOMContentLoaded', playRandomAudio);
+    </script>
+</head>
+<body>
+    <img src="logo/logo.png" alt="Logo" class="logo">
 
+    <div class="initial-screen" id="initial-screen">
+        <img id="start-image" src="imagem/imagem.png" alt="Click" />
+    </div>
+
+    <video class="background-video" src="video/video.mp4" autoplay loop muted id="background-video"></video>
+    
+    <div id="particles-js"></div>
+
+    <div class="container" id="card-container">
+        <div class="card" id="profile-card">
+            <img src="user/1.png" alt="Imagem redonda" class="round-image">
+            <p class="card-text">TuTu</p>
+        </div>
+        <div class="card hidden" id="shark-daily-card">
+            <img src="imagem/imagem.png" alt="Imagem redonda" class="round-image">
+            <p class="card-text">Shark Diario</p>
+            <button class="purchase-button">Comprar</button>
+        </div>
+        <div class="card hidden" id="shark-monthly-card">
+            <img src="imagem/imagem.png" alt="Imagem redonda" class="round-image">
+            <p class="card-text">Shark Mensal</p>
+            <button class="purchase-button">Comprar</button>
+        </div>
+    </div>
+
+    <audio id="background-music" preload="auto"></audio>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
         function start() {
             const music = document.getElementById('background-music');
             const initialScreen = document.getElementById('initial-screen');
@@ -239,15 +260,10 @@
         const profileCard = document.getElementById('profile-card');
         const sharkDailyCard = document.getElementById('shark-daily-card');
         const sharkMonthlyCard = document.getElementById('shark-monthly-card');
-        const qrCode = document.getElementById('qr-code');
 
         profileCard.addEventListener('click', function() {
             sharkDailyCard.classList.remove('hidden');
             sharkMonthlyCard.classList.remove('hidden');
-        });
-
-        document.querySelector('#shark-monthly-card .purchase-button').addEventListener('click', function() {
-            qrCode.style.display = 'block'; // Mostrar o QR Code
         });
 
         particlesJS('particles-js', {
@@ -311,7 +327,7 @@
                 "detect_on": "canvas",
                 "events": {
                     "onhover": {
-                        "enable": false,
+                        "enable": true,
                         "mode": "repulse"
                     },
                     "onclick": {
@@ -319,47 +335,35 @@
                         "mode": "push"
                     },
                     "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 250,
+                        "size": 0,
+                        "duration": 2,
+                        "opacity": 0.8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 400,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
                 }
             },
             "retina_detect": true
         });
     </script>
-</head>
-<body>
-    <div class="initial-screen" id="initial-screen">
-        <img id="start-image" src="logo/logo.png" alt="Start">
-    </div>
-
-    <div class="container" id="card-container">
-        <div class="card" id="profile-card">
-            <img class="round-image" src="logo/profile.png" alt="Profile">
-            <div class="card-text">Perfil</div>
-        </div>
-        <div class="card hidden" id="shark-daily-card">
-            <img class="round-image" src="logo/daily.png" alt="Shark Daily">
-            <div class="card-text">Shark Daily</div>
-        </div>
-        <div class="card hidden" id="shark-monthly-card">
-            <img class="round-image" src="logo/monthly.png" alt="Shark Monthly">
-            <div class="card-text">Shark Monthly</div>
-            <button class="purchase-button">Comprar</button>
-        </div>
-        <!-- QR Code -->
-        <div class="qr-code" id="qr-code">
-            <img src="logo/qr-code.png" alt="QR Code">
-        </div>
-    </div>
-
-    <video class="background-video" id="background-video" autoplay muted loop>
-        <source src="video/clip.mp4" type="video/mp4">
-        Seu navegador não suporta o elemento de vídeo.
-    </video>
-
-    <audio id="background-music" loop>
-        <source src="audio/audio.mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-
-    <div id="particles-js"></div>
 </body>
 </html>
