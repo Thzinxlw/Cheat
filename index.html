@@ -57,6 +57,7 @@
             z-index: 1;
             display: none;
             gap: 20px; /* Espaço entre os cards */
+            flex-wrap: wrap; /* Permite que os cards quebrem linha se necessário */
         }
 
         .card-text {
@@ -100,15 +101,15 @@
             transform: scale(0.95) rotateZ(1.7deg);
         }
 
-        .round-image {
+        .image {
             width: 80px;
             height: 80px;
-            border-radius: 50%;
             object-fit: cover;
             margin-bottom: 10px;
             transition: all 0.3s;
         }
-        .round-image:hover {
+
+        .image:hover {
             border: 2px solid #fff;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
             transform: scale(1.06);
@@ -123,7 +124,7 @@
             object-fit: cover;
             z-index: 0;
             display: none;
-            filter: grayscale(100%) blur(3px);
+            filter: grayscale(60%) blur(3px);
         }
 
         #particles-js {
@@ -222,18 +223,28 @@
 
     <div class="container" id="card-container">
         <div class="card" id="profile-card">
-            <img src="user/1.png" alt="Imagem redonda" class="round-image">
-            <p class="card-text">TuTu</p>
+            <img src="user/1.png" alt="Imagem" class="image">
+            <p class="card-text">Shark Menu</p>
         </div>
         <div class="card hidden" id="shark-daily-card">
-            <img src="imagem/imagem.png" alt="Imagem redonda" class="round-image">
-            <p class="card-text">Shark Diario</p>
+            <img src="imagem/imagem.png" alt="Imagem" class="image" id="shark-daily-qr">
+            <p class="card-text">Shark Diário</p>
+            <button class="purchase-button">Comprar</button>
+        </div>
+        <div class="card hidden" id="shark-weekly-card">
+            <img src="imagem/imagem.png" alt="Imagem" class="image" id="shark-weekly-qr">
+            <p class="card-text">Shark Semanal</p>
             <button class="purchase-button">Comprar</button>
         </div>
         <div class="card hidden" id="shark-monthly-card">
-            <img src="imagem/imagem.png" alt="Imagem redonda" class="round-image">
+            <img src="imagem/imagem.png" alt="Imagem" class="image" id="shark-monthly-qr">
             <p class="card-text">Shark Mensal</p>
-            <button class="purchase-button">Comprar</button>
+            <button class="purchase-button" id="monthly-button">Comprar</button>
+        </div>
+        <div class="card hidden" id="shark-lifetime-card">
+            <img src="imagem/imagem.png" alt="Imagem" class="image" id="shark-lifetime-qr">
+            <p class="card-text">Shark Lifetime</p>
+            <button class="purchase-button" id="lifetime-button">Comprar</button>
         </div>
     </div>
 
@@ -259,111 +270,61 @@
 
         const profileCard = document.getElementById('profile-card');
         const sharkDailyCard = document.getElementById('shark-daily-card');
+        const sharkWeeklyCard = document.getElementById('shark-weekly-card');
         const sharkMonthlyCard = document.getElementById('shark-monthly-card');
+        const sharkLifetimeCard = document.getElementById('shark-lifetime-card');
+
+        // IDs dos QR codes e links correspondentes
+        const qrLinks = {
+            daily: 'https://discord.gg/VeMMqESKNA',
+            weekly: 'https://discord.gg/XetRDPaMYJ',
+            monthly: 'https://discord.gg/zrHKrDAcMt',
+            lifetime: 'https://discord.gg/uuDgHssggY'
+        };
 
         profileCard.addEventListener('click', function() {
-            sharkDailyCard.classList.remove('hidden');
-            sharkMonthlyCard.classList.remove('hidden');
+            profileCard.classList.toggle('hidden');
+            sharkDailyCard.classList.toggle('hidden');
+            sharkWeeklyCard.classList.toggle('hidden');
+            sharkMonthlyCard.classList.toggle('hidden');
+            sharkLifetimeCard.classList.toggle('hidden');
         });
 
-        particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 200, // Aumente o número de partículas para simular mais neve
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#ffffff" // Cor branca para os flocos de neve
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    }
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": true,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": true,
-                        "speed": 4,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": false
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 1,
-                    "direction": "bottom",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "repulse"
-                    },
-                    "onclick": {
-                        "enable": false,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 400,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 250,
-                        "size": 0,
-                        "duration": 2,
-                        "opacity": 0.8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 400,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
-                    }
-                }
-            },
-            "retina_detect": true
+        // Adiciona eventos de clique para cada QR code
+        document.getElementById('shark-daily-qr').addEventListener('click', function() {
+            window.open(qrLinks.daily, '_blank'); // Abre o link em uma nova aba
         });
+        document.getElementById('shark-weekly-qr').addEventListener('click', function() {
+            window.open(qrLinks.weekly, '_blank'); // Abre o link em uma nova aba
+        });
+        document.getElementById('shark-monthly-qr').addEventListener('click', function() {
+            window.open(qrLinks.monthly, '_blank'); // Abre o link em uma nova aba
+        });
+        document.getElementById('shark-lifetime-qr').addEventListener('click', function() {
+            window.open(qrLinks.lifetime, '_blank'); // Abre o link em uma nova aba
+        });
+
+
+        sharkDailyCard.addEventListener('click', function(){
+            const profileImage = document.querySelector('#shark-daily-card .image');
+            profileImage.src = 'imagem/qr-code.png'; // Caminho para a imagem local
+        });
+
+        sharkWeeklyCard.addEventListener('click', function() {
+            const profileImage = document.querySelector('#shark-weekly-card .image');
+            profileImage.src = 'imagem/qr-code1.png'; // Caminho para a imagem local
+        });
+
+        sharkMonthlyCard.addEventListener('click', function() {
+            const profileImage = document.querySelector('#shark-monthly-card .image');
+            profileImage.src = 'imagem/qr-code2.png'; // Caminho para a imagem local
+        });
+
+        sharkLifetimeCard.addEventListener('click', function() {
+            const profileImage = document.querySelector('#shark-lifetime-card .image');
+            profileImage.src = 'imagem/qr-code3.png'; // Caminho para a imagem local
+        });
+
     </script>
 </body>
 </html>
